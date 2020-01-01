@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <properties resource="config.properties"/>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="${sequarius.titan.generator.driverClass}"
+                        connectionURL="${sequarius.titan.generator.connectionURL}"
+                        userId="${sequarius.titan.generator.userId}"
+                        password="${sequarius.titan.generator.password}">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <!--是否使用bigDecimal，默认false。
+            false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer
+            true，把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal-->
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="${sequarius.titan.generator.domain.package}" targetProject="src/main/java">
+            <!-- 是否让schema作为包的后缀，默认为false -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否针对string类型的字段在set方法中进行修剪，默认false -->
+            <property name="trimStrings" value="false"/>
+        </javaModelGenerator>
+
+
+        <sqlMapGenerator targetPackage="${sequarius.titan.generator.mapper.package}" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${sequarius.titan.generator.repository.package}" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="%">
+            <domainObjectRenamingRule searchString="$" replaceString="DO" />
+        </table>
+
+    </context>
+</generatorConfiguration>

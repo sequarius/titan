@@ -9,19 +9,12 @@
         <relativePath>../titan-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
 
-    <artifactId>titan-generator</artifactId>
+    <artifactId>titan-sample</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-        </dependency>
-    </dependencies>
 
+    <modules>
+        <module>titan-sample-mybatis-generator</module>
+    </modules>
 </project>

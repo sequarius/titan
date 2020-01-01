@@ -1,3 +1,6 @@
 *.iml
 /.idea/
 /titan-parent/target/
+/titan-sample/titan-sample-mybatis-generator/src/main/resources/config.properties
+/titan-sample/titan-sample-mybatis-generator/src/main/java/
+/titan-sample/titan-sample-mybatis-generator/src/main/resources/com/sequarius/domain/

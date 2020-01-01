@@ -12,6 +12,7 @@
         <module>titan-parent</module>
         <module>titan-common</module>
         <module>titan-generator</module>
+        <module>titan-sample</module>
     </modules>
 
     <properties>
