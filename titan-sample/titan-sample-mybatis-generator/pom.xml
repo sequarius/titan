@@ -18,6 +18,11 @@
             <artifactId>mybatis</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sequarius</groupId>
+            <artifactId>titan-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
@@ -32,6 +37,11 @@
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
                         <version>8.0.18</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.sequarius</groupId>
+                        <artifactId>titan-generator</artifactId>
+                        <version>1.0-SNAPSHOT</version>
                     </dependency>
                 </dependencies>
                 <configuration>

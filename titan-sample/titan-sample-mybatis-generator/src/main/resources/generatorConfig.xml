@@ -8,6 +8,9 @@
     <properties resource="config.properties"/>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
+        <plugin type="com.sequarius.generator.mybatis.plugins.LombokPlugin"/>
+        <plugin type="com.sequarius.generator.mybatis.plugins.MySQLLimitPlugin"/>
+
         <jdbcConnection driverClass="${sequarius.titan.generator.driverClass}"
                         connectionURL="${sequarius.titan.generator.connectionURL}"
                         userId="${sequarius.titan.generator.userId}"
@@ -28,6 +31,8 @@
             <!-- 是否针对string类型的字段在set方法中进行修剪，默认false -->
             <property name="trimStrings" value="false"/>
         </javaModelGenerator>
+
+
 
 
         <sqlMapGenerator targetPackage="${sequarius.titan.generator.mapper.package}" targetProject="src/main/resources">

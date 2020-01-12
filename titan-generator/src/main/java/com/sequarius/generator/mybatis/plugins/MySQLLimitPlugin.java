@@ -1,6 +1,7 @@
 package com.sequarius.generator.mybatis.plugins;
 
 
+import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.*;
@@ -13,76 +14,46 @@ import java.util.List;
 
 public class MySQLLimitPlugin extends PluginAdapter {
 
+    private static final String PAGE_ENTITY_NAME = "com.sequarius.titan.common.Page";
+
     @Override
-    public boolean validate(List<String> list) {
-        return true;
+    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable)
+    {
+        String pageEntityName="page";
+        topLevelClass.addImportedType(new FullyQualifiedJavaType(PAGE_ENTITY_NAME));
+        CommentGenerator commentGenerator = context.getCommentGenerator();
+        Field field = new Field(pageEntityName,new FullyQualifiedJavaType(PAGE_ENTITY_NAME));
+        field.setVisibility(JavaVisibility.PROTECTED);
+        commentGenerator.addFieldComment(field, introspectedTable);
+        topLevelClass.addField(field);
+        char c = pageEntityName.charAt(0);
+        String camel = Character.toUpperCase(c) + pageEntityName.substring(1);
+        Method method = new Method("set" + camel);
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.addParameter(new Parameter(new FullyQualifiedJavaType(PAGE_ENTITY_NAME), pageEntityName));
+        method.addBodyLine("this." + pageEntityName + "=" + pageEntityName + ";");
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+        method = new Method("get" + camel);
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(new FullyQualifiedJavaType(PAGE_ENTITY_NAME));
+        method.addBodyLine("return " + pageEntityName + ";");
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+        return super.modelExampleClassGenerated(topLevelClass, introspectedTable);
+    }
+    @Override
+    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable)
+    {
+        XmlElement page = new XmlElement("if");
+        page.addAttribute(new Attribute("test", "page != null"));
+        page.addElement(new TextElement("limit #{page.begin} , #{page.length}"));
+        element.addElement(page);
+        return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
     }
 
-    /**
-     * 为每个Example类添加limit和offset属性已经set、get方法
-     */
-    @Override
-    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-
-        PrimitiveTypeWrapper integerWrapper = FullyQualifiedJavaType.getIntInstance().getPrimitiveTypeWrapper();
-
-        Field limit = new Field("limit",integerWrapper);
-        limit.setVisibility(JavaVisibility.PRIVATE);
-        topLevelClass.addField(limit);
-
-        Method setLimit = new Method("setLimit");
-        setLimit.setVisibility(JavaVisibility.PUBLIC);
-        setLimit.addParameter(new Parameter(integerWrapper, "limit"));
-        setLimit.addBodyLine("this.limit = limit;");
-        topLevelClass.addMethod(setLimit);
-
-        Method getLimit = new Method("getLimit");
-        getLimit.setVisibility(JavaVisibility.PUBLIC);
-        getLimit.setReturnType(integerWrapper);
-        getLimit.addBodyLine("return limit;");
-        topLevelClass.addMethod(getLimit);
-
-        Field offset = new Field("offset",integerWrapper);
-        offset.setVisibility(JavaVisibility.PRIVATE);
-        topLevelClass.addField(offset);
-
-        Method setOffset = new Method("setOffset");
-        setOffset.setVisibility(JavaVisibility.PUBLIC);
-        setOffset.addParameter(new Parameter(integerWrapper, "offset"));
-        setOffset.addBodyLine("this.offset = offset;");
-        topLevelClass.addMethod(setOffset);
-
-        Method getOffset = new Method("getOffset");
-        getOffset.setVisibility(JavaVisibility.PUBLIC);
-        getOffset.setReturnType(integerWrapper);
-        getOffset.addBodyLine("return offset;");
-        topLevelClass.addMethod(getOffset);
-
-        return true;
-    }
-
-    /**
-     * 为Mapper.xml的selectByExample添加limit
-     */
-    @Override
-    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element,
-                                                                     IntrospectedTable introspectedTable) {
-
-        XmlElement ifLimitNotNullElement = new XmlElement("if");
-        ifLimitNotNullElement.addAttribute(new Attribute("test", "limit != null"));
-
-        XmlElement ifOffsetNotNullElement = new XmlElement("if");
-        ifOffsetNotNullElement.addAttribute(new Attribute("test", "offset != null"));
-        ifOffsetNotNullElement.addElement(new TextElement("limit ${offset}, ${limit}"));
-        ifLimitNotNullElement.addElement(ifOffsetNotNullElement);
-
-        XmlElement ifOffsetNullElement = new XmlElement("if");
-        ifOffsetNullElement.addAttribute(new Attribute("test", "offset == null"));
-        ifOffsetNullElement.addElement(new TextElement("limit ${limit}"));
-        ifLimitNotNullElement.addElement(ifOffsetNullElement);
-
-        element.addElement(ifLimitNotNullElement);
-
+    public boolean validate(List<String> warnings)
+    {
         return true;
     }
 }
