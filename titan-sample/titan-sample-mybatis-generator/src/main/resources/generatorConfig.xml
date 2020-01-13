@@ -10,6 +10,8 @@
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <plugin type="com.sequarius.generator.mybatis.plugins.LombokPlugin"/>
         <plugin type="com.sequarius.generator.mybatis.plugins.MySQLLimitPlugin"/>
+        <plugin type="com.sequarius.generator.mybatis.plugins.IgnoreAutoDatePlugin"/>
+
 
         <jdbcConnection driverClass="${sequarius.titan.generator.driverClass}"
                         connectionURL="${sequarius.titan.generator.connectionURL}"
