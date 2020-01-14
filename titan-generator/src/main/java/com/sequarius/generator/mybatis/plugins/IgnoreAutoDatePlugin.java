@@ -45,12 +45,24 @@ public class IgnoreAutoDatePlugin extends PluginAdapter {
                 iterator.remove();
             }
         }
+        for (int i = elements.size() - 1; i >= 0; i--) {
+            VisitableElement baseElements=elements.get(i);
+            if (!(baseElements instanceof TextElement)){
+                continue;
+            }
+            TextElement targetElement=(TextElement)baseElements;
+            if(targetElement.getContent().endsWith(",")){
+                elements.set(i,new TextElement(targetElement.getContent().replaceAll(",","")));
+            }
+            break;
+        }
     }
 
     public boolean validate(List<String> warnings)
     {
         return true;
     }
+
     private void removeTimeAttribute(XmlElement element) {
         List<VisitableElement> elements = element.getElements();
         Iterator<VisitableElement> iterator = elements.iterator();
