@@ -13,11 +13,20 @@
         <plugin type="com.sequarius.generator.mybatis.plugins.IgnoreAutoDatePlugin"/>
 
 
+        <commentGenerator type="com.sequarius.generator.mybatis.plugins.MySQLCommentGenerator">
+            <property name="author" value="Michael Chow"/>
+            <property name="dateFormat" value="yyyy/MM/dd"/>
+            <property name="filedAnnotationClass" value="com.sequarius.titan.annonation.Filed"/>
+            <property name="entityAnnotationClass" value="com.sequarius.titan.annonation.Entity"/>
+        </commentGenerator>
+
         <jdbcConnection driverClass="${sequarius.titan.generator.driverClass}"
                         connectionURL="${sequarius.titan.generator.connectionURL}"
                         userId="${sequarius.titan.generator.userId}"
                         password="${sequarius.titan.generator.password}">
             <property name="nullCatalogMeansCurrent" value="true"/>
+            <property name="useInformationSchema" value="true" />
+            <property name="characterEncoding" value="utf8" />
         </jdbcConnection>
 
         <javaTypeResolver>
