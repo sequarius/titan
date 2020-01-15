@@ -11,6 +11,10 @@
         <plugin type="com.sequarius.generator.mybatis.plugins.LombokPlugin"/>
         <plugin type="com.sequarius.generator.mybatis.plugins.MySQLLimitPlugin"/>
         <plugin type="com.sequarius.generator.mybatis.plugins.IgnoreAutoDatePlugin"/>
+        <plugin type="com.itfsw.mybatis.generator.plugins.EnumTypeStatusPlugin">
+            <!-- 是否开启自动扫描根据约定注释格式生成枚举，默认true -->
+            <property name="autoScan" value="true"/>
+        </plugin>
 
 
         <commentGenerator type="com.sequarius.generator.mybatis.plugins.MySQLCommentGenerator">
