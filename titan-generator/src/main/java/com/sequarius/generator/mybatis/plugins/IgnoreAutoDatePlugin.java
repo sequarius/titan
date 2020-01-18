@@ -3,7 +3,7 @@ package com.sequarius.generator.mybatis.plugins;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.xml.TextElement;
-import org.mybatis.generator.api.dom.xml.VisitableElement;
+import org.mybatis.generator.api.dom.xml.Element;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import java.util.Iterator;
@@ -33,10 +33,10 @@ public class IgnoreAutoDatePlugin extends PluginAdapter {
     }
 
     private void removeTimeTextAttribute(XmlElement element) {
-        List<VisitableElement> elements = element.getElements();
-        Iterator<VisitableElement> iterator = elements.iterator();
+        List<Element> elements = element.getElements();
+        Iterator<Element> iterator = elements.iterator();
         while (iterator.hasNext()){
-            VisitableElement baseElements=iterator.next();
+            Element baseElements=iterator.next();
             if (!(baseElements instanceof TextElement)){
                 continue;
             }
@@ -46,7 +46,7 @@ public class IgnoreAutoDatePlugin extends PluginAdapter {
             }
         }
         for (int i = elements.size() - 1; i >= 0; i--) {
-            VisitableElement baseElements=elements.get(i);
+            Element baseElements=elements.get(i);
             if (!(baseElements instanceof TextElement)){
                 continue;
             }
@@ -64,10 +64,10 @@ public class IgnoreAutoDatePlugin extends PluginAdapter {
     }
 
     private void removeTimeAttribute(XmlElement element) {
-        List<VisitableElement> elements = element.getElements();
-        Iterator<VisitableElement> iterator = elements.iterator();
+        List<Element> elements = element.getElements();
+        Iterator<Element> iterator = elements.iterator();
         while (iterator.hasNext()){
-            VisitableElement baseElements=iterator.next();
+            Element baseElements=iterator.next();
             if (!(baseElements instanceof XmlElement)){
                 continue;
             }
@@ -75,15 +75,15 @@ public class IgnoreAutoDatePlugin extends PluginAdapter {
             if(!setTagElement.getName().contains("set")){
                 continue;
             }
-            List<VisitableElement> setTagElements = setTagElement.getElements();
-            Iterator<VisitableElement> setTagIterator = setTagElements.iterator();
+            List<Element> setTagElements = setTagElement.getElements();
+            Iterator<Element> setTagIterator = setTagElements.iterator();
             while (setTagIterator.hasNext()){
-                VisitableElement currentElement = setTagIterator.next();
+                Element currentElement = setTagIterator.next();
                 if (!(currentElement instanceof XmlElement)){
                     continue;
                 }
                 XmlElement setTagInnerElement=(XmlElement)currentElement;
-                for (VisitableElement next : setTagInnerElement.getElements()) {
+                for (Element next : setTagInnerElement.getElements()) {
                     if (!(next instanceof TextElement)) {
                         continue;
                     }

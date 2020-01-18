@@ -51,7 +51,7 @@ public class MySQLCommentGenerator extends DefaultCommentGenerator {
         topLevelClass.addAnnotation("");
 
         String annotation = String.format("@Entity(name = \"%s\", displayName = \"%s\")",
-                introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime(),introspectedTable.getRemarks());
+                introspectedTable.getFullyQualifiedTable().getDomainObjectName(),introspectedTable.getRemarks());
         topLevelClass.addAnnotation(annotation);
 
     }
@@ -68,7 +68,7 @@ public class MySQLCommentGenerator extends DefaultCommentGenerator {
             remarks = "id";
         }
         String annotation = String.format("@Filed(name = \"%s\", displayName = \"%s\", type = \"%s\", length = %d)",
-                field.getName(),remarks,introspectedColumn.getActualTypeName(),introspectedColumn.getLength());
+                field.getName(),remarks,introspectedColumn.getJdbcTypeName(),introspectedColumn.getLength());
                 field.addAnnotation(annotation);
         field.addJavaDocLine("/**");
         field.addJavaDocLine(" * " + remarks);

@@ -59,6 +59,7 @@
         </javaClientGenerator>
 
         <table tableName="%">
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
             <domainObjectRenamingRule searchString="$" replaceString="DO" />
         </table>
 
