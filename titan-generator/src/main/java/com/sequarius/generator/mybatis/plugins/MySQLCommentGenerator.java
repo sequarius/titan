@@ -51,7 +51,7 @@ public class MySQLCommentGenerator extends DefaultCommentGenerator {
         topLevelClass.addAnnotation("");
 
         String annotation = String.format("@Entity(name = \"%s\", displayName = \"%s\")",
-                introspectedTable.getFullyQualifiedTable().getDomainObjectName(),introspectedTable.getRemarks());
+                introspectedTable.getFullyQualifiedTable().getDomainObjectName(), introspectedTable.getRemarks());
         topLevelClass.addAnnotation(annotation);
 
     }
@@ -60,16 +60,16 @@ public class MySQLCommentGenerator extends DefaultCommentGenerator {
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
         // 获取列注释
         String remarks = introspectedColumn.getRemarks();
-        if("createTime".equals(field.getName())){
+        if ("createTime".equals(field.getName())) {
             remarks = "创建日期";
-        }else if("updateTime".equals(field.getName())){
+        } else if ("updateTime".equals(field.getName())) {
             remarks = "更新日期";
-        }else if ("id".equals(field.getName())){
+        } else if ("id".equals(field.getName())) {
             remarks = "id";
         }
-        String annotation = String.format("@Filed(name = \"%s\", displayName = \"%s\", type = \"%s\", length = %d)",
-                field.getName(),remarks,introspectedColumn.getJdbcTypeName(),introspectedColumn.getLength());
-                field.addAnnotation(annotation);
+        String annotation = String.format("@Filed(name = \"%s\", displayName = \"%s\", length = %d)",
+                field.getName(), remarks, introspectedColumn.getLength());
+        field.addAnnotation(annotation);
         field.addJavaDocLine("/**");
         field.addJavaDocLine(" * " + remarks);
         field.addJavaDocLine(" */");

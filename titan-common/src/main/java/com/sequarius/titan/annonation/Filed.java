@@ -16,6 +16,5 @@ import java.lang.annotation.Target;
 public @interface Filed {
     String name();
     String displayName();
-    String type();
     int length();
 }
