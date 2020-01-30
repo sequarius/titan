@@ -13,6 +13,7 @@
         <module>titan-common</module>
         <module>titan-generator</module>
         <module>titan-sample</module>
+        <module>titan-common-archetype</module>
     </modules>
 
     <properties>

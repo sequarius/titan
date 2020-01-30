@@ -16,13 +16,16 @@ public class MySQLLimitPlugin extends PluginAdapter {
 
     private static final String PAGE_ENTITY_NAME = "com.sequarius.titan.common.Page";
 
+
+
     @Override
     public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable)
     {
+        String pageClassFullName=getProperties().getProperty("pageEntityName",PAGE_ENTITY_NAME);
         String pageEntityName="page";
-        topLevelClass.addImportedType(new FullyQualifiedJavaType(PAGE_ENTITY_NAME));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType(pageClassFullName));
         CommentGenerator commentGenerator = context.getCommentGenerator();
-        Field field = new Field(pageEntityName,new FullyQualifiedJavaType(PAGE_ENTITY_NAME));
+        Field field = new Field(pageEntityName,new FullyQualifiedJavaType(pageClassFullName));
         field.setVisibility(JavaVisibility.PROTECTED);
         commentGenerator.addFieldComment(field, introspectedTable);
         topLevelClass.addField(field);
@@ -30,13 +33,13 @@ public class MySQLLimitPlugin extends PluginAdapter {
         String camel = Character.toUpperCase(c) + pageEntityName.substring(1);
         Method method = new Method("set" + camel);
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.addParameter(new Parameter(new FullyQualifiedJavaType(PAGE_ENTITY_NAME), pageEntityName));
+        method.addParameter(new Parameter(new FullyQualifiedJavaType(pageClassFullName), pageEntityName));
         method.addBodyLine("this." + pageEntityName + "=" + pageEntityName + ";");
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
         method = new Method("get" + camel);
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(new FullyQualifiedJavaType(PAGE_ENTITY_NAME));
+        method.setReturnType(new FullyQualifiedJavaType(pageClassFullName));
         method.addBodyLine("return " + pageEntityName + ";");
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
