@@ -12,9 +12,19 @@
         <module>titan-parent</module>
         <module>titan-common</module>
         <module>titan-generator</module>
-        <module>titan-sample</module>
         <module>titan-common-archetype</module>
     </modules>
+
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/78097-release-Fb74cq/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/78097-snapshot-Ke7ZxJ/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
