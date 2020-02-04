@@ -1,0 +1,24 @@
+moduleName: system                # 所属模块名称(必填)
+displayName: null                 # 实体显示名称
+entityName: null                  # 实体名称
+url: /useraaa                     #实体url
+overrideWhenFileExisted: false    #当存在文件是否覆盖
+ignoreController: false           # 不创建controller
+ignoreGetMethod: false            # 不创建获取单个实体的方法
+ignoreListMethod: false           # 不创建实体列表的方法
+ignoreRemoveMethod: false         # 不创建删除实体的方法
+ignoreSaveMethod: false           # 不创建保存实体的方法
+ignoreUpdateMethod: false         # 不创建更新的方法
+# 具体字段配置
+fieldSpecs:
+- name: xdsjsd                  #字段名称
+  defaultValue: null            #默认值
+  displayName: null             #显示名
+  maxLength: 3                  #最大长度
+  minLength: 15                 #最小长度
+  notNull: false                #是否非空
+  regPatten: null               #正则校验规则
+  regPattenMessage: null        #正则校验失败
+  requestDTOIgnore: null        #是否在requestDTO中忽略该字段
+  required: true                #是否为必须字段
+  responseDTOIgnore: null       #是否在responseDTO中忽略该字段
