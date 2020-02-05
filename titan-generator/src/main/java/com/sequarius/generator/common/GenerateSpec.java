@@ -3,6 +3,7 @@ package com.sequarius.generator.common;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * project titan
@@ -18,6 +19,12 @@ public class GenerateSpec {
     private String moduleName;
     private String url;
 
+    private String servicePackageName;
+    private String projectRoot;
+    private String basePackageName;
+    private String domainPackageName;
+    private String controllerPackageName;
+
     private Boolean overrideWhenFileExisted;
     private Boolean ignoreController;
 
@@ -28,4 +35,6 @@ public class GenerateSpec {
     private Boolean ignoreGetMethod;
 
     private List<FieldSpec> fieldSpecs;
+
+    private Set<String> fieldTypePackages;
 }

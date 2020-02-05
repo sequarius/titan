@@ -16,7 +16,6 @@ public class FieldSpec {
     private Boolean requestDTOIgnore;
     private Boolean responseDTOIgnore;
 
-    private Boolean required;
     private Boolean notNull;
 
     private Integer maxLength;
@@ -24,4 +23,6 @@ public class FieldSpec {
     private String defaultValue;
     private String regPatten;
     private String regPattenMessage;
+
+    private Class<?> type;
 }
