@@ -12,8 +12,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 <#list fieldTypePackages as fieldTypePackage>
-    import ${fieldTypePackage};
+import ${fieldTypePackage};
 </#list>
+
 
 /**
  * ${displayName}响应实体
@@ -39,6 +40,10 @@ public class ${entityName}ResponseDTO {
     </#if>
     <#if fieldSpec.regPatten??>
     @Pattern(regexp = "${fieldSpec.regPatten}", message = "${fieldSpec.regPattenMessage!(fieldSpec.regPatten+'不符合校验规则!')}")
+    </#if>
+    <#if fieldSpec.type.simpleName == 'Date'>
+    @DateTimeFormat(pattern = FormatUtil.DATE_FORMAT_TEMPLATE)
+    @JsonFormat(pattern = FormatUtil.DATE_FORMAT_TEMPLATE, timezone = Constant.DEFAULT_TIME_ZONE)
     </#if>
     private ${fieldSpec.type.simpleName} ${fieldSpec.name};
 </#if>

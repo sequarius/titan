@@ -6,7 +6,7 @@ controllerPackageName: controller
 commonPackageName: com.sequarius.titan.sample.common
 
 moduleName: system                # 所属模块包名称(必填)
-displayName: null                 # 实体显示名称
+displayName: 用户22                 # 实体显示名称
 entityName: SysU2                  # 实体名称
 url:                              #实体url 默认为 /实体名称
 overrideWhenFileExisted: true     #当存在文件是否覆盖

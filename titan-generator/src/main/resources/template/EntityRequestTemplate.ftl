@@ -40,6 +40,10 @@ public class ${entityName}RequestDTO {
     <#if fieldSpec.regPatten??>
     @Pattern(regexp = "${fieldSpec.regPatten}", message = "${fieldSpec.regPattenMessage!(fieldSpec.regPatten+'不符合校验规则!')}")
     </#if>
+    <#if fieldSpec.type.simpleName == 'Date'>
+    @DateTimeFormat(pattern = FormatUtil.DATE_FORMAT_TEMPLATE)
+    @JsonFormat(pattern = FormatUtil.DATE_FORMAT_TEMPLATE, timezone = Constant.DEFAULT_TIME_ZONE)
+    </#if>
     private ${fieldSpec.type.simpleName} ${fieldSpec.name};
     </#if>
 </#list>

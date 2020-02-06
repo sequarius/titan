@@ -74,6 +74,12 @@ public class YamlConfigSupport {
             if(className.startsWith("java.lang")){
                 continue;
             }
+            if("java.util.Date".equals(className)){
+                packageSet.add("com.fasterxml.jackson.annotation.JsonFormat");
+                packageSet.add("org.springframework.format.annotation.DateTimeFormat");
+                packageSet.add(spec.getCommonPackageName()+".util.Constant");
+                packageSet.add(spec.getCommonPackageName()+".util.FormatUtil");
+            }
             packageSet.add(className);
         }
         spec.setFieldSpecs(resultSpec);
