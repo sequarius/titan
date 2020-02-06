@@ -1,6 +1,6 @@
 <#assign aDateTime = .now>
 <#assign aDate = aDateTime?date>
-package ${basePackageName}.${moduleName}.${controllerPackageName}.${moduleName}.controller;
+package ${basePackageName}.${moduleName}.${controllerPackageName};
 
 import ${commonPackageName}.Page;
 import ${commonPackageName}.Response;
