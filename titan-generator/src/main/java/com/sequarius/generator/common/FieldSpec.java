@@ -23,6 +23,7 @@ public class FieldSpec {
     private String defaultValue;
     private String regPatten;
     private String regPattenMessage;
+    private Boolean searchable;
 
     private Class<?> type;
 }

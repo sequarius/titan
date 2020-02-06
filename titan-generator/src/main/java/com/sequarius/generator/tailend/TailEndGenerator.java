@@ -43,11 +43,11 @@ public class TailEndGenerator {
         FreeMarkerSupport freeMarkerSupport = new FreeMarkerSupport(generateSpec);
         try {
             freeMarkerSupport.generateResponseDTO();
+            freeMarkerSupport.generateRequestDTO();
             freeMarkerSupport.generateService();
             if (!Boolean.TRUE.equals(generateSpec.getIgnoreController())) {
                 freeMarkerSupport.generateController();
             }
-            freeMarkerSupport.generateRequestDTO();
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

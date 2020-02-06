@@ -52,11 +52,13 @@ public class YamlConfigSupport {
         Map<String, FieldSpec> specialConfig = new HashMap<>();
         List<FieldSpec> resultSpec = new LinkedList<>();
         Set<String> packageSet = new TreeSet<>();
+        Set<String> searchableFieldSet = new TreeSet<>();
 
         if (spec.getFieldSpecs() != null) {
             specialConfig = spec.getFieldSpecs().stream().collect(Collectors.toMap(FieldSpec::getName, Function.identity()));
         }
         for (Map.Entry<String, Field> entityFiled : entity.getFiledMap().entrySet()) {
+            // init common field
             FieldSpec fieldSpec = specialConfig.get(entityFiled.getKey());
             if (fieldSpec == null) {
                 fieldSpec = new FieldSpec();
@@ -70,10 +72,9 @@ public class YamlConfigSupport {
             }
             fieldSpec.setType(entityFiled.getValue().getType());
             resultSpec.add(fieldSpec);
+
+            // add format annotation if the field is Date field.
             String className = entityFiled.getValue().getType().getName();
-            if(className.startsWith("java.lang")){
-                continue;
-            }
             if("java.util.Date".equals(className)){
                 packageSet.add("com.fasterxml.jackson.annotation.JsonFormat");
                 packageSet.add("org.springframework.format.annotation.DateTimeFormat");
@@ -81,8 +82,23 @@ public class YamlConfigSupport {
                 packageSet.add(spec.getCommonPackageName()+".util.FormatUtil");
             }
             packageSet.add(className);
+
+            // get searchable field
+            if(Boolean.TRUE.equals(fieldSpec.getSearchable())){
+                if (fieldSpec.getType().getSimpleName().equals("String")) {
+                    searchableFieldSet.add(fieldSpec.getName());
+                }else{
+                    log.warn("cant mark field {} as search key, only type of String can be generate yet!",fieldSpec.getName());
+                }
+            }
+
+            // has deleted value should be update deleted field for delete
+            if("deleted".equals(entityFiled.getKey())){
+                spec.setFlagDelete(true);
+            }
         }
         spec.setFieldSpecs(resultSpec);
+        spec.setSearchableFieldNames(searchableFieldSet);
         spec.setFieldTypePackages(packageSet);
     }
 }

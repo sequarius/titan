@@ -28,5 +28,8 @@ fieldSpecs:
   regPattenMessage: "xds错误"        #正则校验失败
   requestDTOIgnore: null        #是否在requestDTO中忽略该字段
   responseDTOIgnore: null       #是否在responseDTO中忽略该字段
-- name: createTime
-  requestDTOIgnore: true
+  searchable: null
+- name: username
+  searchable: true
+- name: phoneNumber
+  searchable: true

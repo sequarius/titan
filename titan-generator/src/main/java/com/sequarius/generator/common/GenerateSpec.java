@@ -21,6 +21,8 @@ public class GenerateSpec {
     private String moduleName;
     private String url;
 
+    private Boolean flagDelete;
+
     private String servicePackageName;
     private String projectRoot;
     private String basePackageName;
@@ -40,4 +42,6 @@ public class GenerateSpec {
     private List<FieldSpec> fieldSpecs;
 
     private Set<String> fieldTypePackages;
+
+    private Set<String> searchableFieldNames;
 }

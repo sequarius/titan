@@ -12,6 +12,7 @@ import ${basePackageName}.${moduleName}.${servicePackageName}.${entityName}Servi
 import ${commonPackageName}.util.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
  * @since ${aDate?iso_utc}
  */
 @Service
+@Slf4j
 public class ${entityName}ServiceImpl implements ${entityName}Service {
 
     @Resource
@@ -40,6 +42,24 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     public List<${entityName}ResponseDTO> list${entityName}s(Page page, String keyword) {
         ${doEntityName}Example example = new ${doEntityName}Example();
         example.setPage(page);
+<#if !flagDelete?? || !flagDelete>
+<#if searchableFieldNames?size!=0>
+        if (!StringUtils.isEmpty(keyword)) {
+<#list searchableFieldNames as fieldName>
+            example.or().and${fieldName?cap_first}Like(keyword + "%");
+</#list>
+        }
+</#if>
+</#if>
+<#if flagDelete?? && flagDelete>
+<#if searchableFieldNames?size!=0>
+        if (!StringUtils.isEmpty(keyword)) {
+<#list searchableFieldNames as fieldName>
+            example.or().andDeletedEqualTo(false).and${fieldName?cap_first}Like(keyword + "%");
+</#list>
+        }
+</#if>
+</#if>
         return BeanUtils.copyList(${camelEntityName}Mapper.selectByExample(example), ${entityName}ResponseDTO.class);
     }
 </#if>
@@ -105,9 +125,18 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
      */
     @Override
     public Integer remove${entityName}(List<Long> ids) {
+<#if !flagDelete?? || !flagDelete>
         ${doEntityName}Example example = new ${doEntityName}Example();
         example.createCriteria().andIdIn(ids);
         return ${camelEntityName}Mapper.deleteByExample(example);
+</#if>
+<#if flagDelete?? && flagDelete>
+        ${doEntityName} ${camelEntityName} = new ${doEntityName}();
+        ${camelEntityName}.setDeleted(true);
+        ${doEntityName}Example example = new ${doEntityName}Example();
+        example.createCriteria().andIdIn(ids).andDeletedEqualTo(false);
+        return ${camelEntityName}Mapper.updateByExampleSelective(${camelEntityName},example);
+</#if>
     }
 </#if>
 
@@ -118,6 +147,18 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
      * @return ${displayName}响应实体
      */
     private ${doEntityName} find${doEntityName}ById(Long id) {
+<#if !flagDelete?? || !flagDelete>
         return ${camelEntityName}Mapper.selectByPrimaryKey(id);
-    }
+</#if>
+<#if flagDelete?? && flagDelete>
+        ${doEntityName}Example example = new ${doEntityName}Example();
+        example.createCriteria().andDeletedEqualTo(false).andIdEqualTo(id);
+        List<${doEntityName}> ${camelEntityName}s = ${camelEntityName}Mapper.selectByExample(example);
+        if (${camelEntityName}s .size() != 1) {
+            log.warn("try to find {} with id {}, but find {}","${doEntityName}",id,${camelEntityName}s);
+            return null;
+        }
+        return ${camelEntityName}s.get(0);
+</#if>
+     }
 }
