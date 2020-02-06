@@ -1,19 +1,20 @@
 projectRoot: D:/WorkSpace/titan-sample/titan-sample-system
-basePackageName: com.sequarius.titan.sample.system
+basePackageName: com.sequarius.titan.sample
 servicePackageName: service
 domainPackageName: domain
 controllerPackageName: controller
+commonPackageName: com.sequarius.titan.sample.common
 
-moduleName: system                # 所属模块名称(必填)
+moduleName: system                # 所属模块包名称(必填)
 displayName: null                 # 实体显示名称
-entityName: null                  # 实体名称
-url: /useraaa                     #实体url
-overrideWhenFileExisted: true    #当存在文件是否覆盖
+entityName: SysU2                  # 实体名称
+url:                              #实体url 默认为 /实体名称
+overrideWhenFileExisted: true     #当存在文件是否覆盖
 ignoreController: false           # 不创建controller
 ignoreGetMethod: false            # 不创建获取单个实体的方法
-ignoreListMethod: false           # 不创建实体列表的方法
-ignoreRemoveMethod: false         # 不创建删除实体的方法
-ignoreSaveMethod: false           # 不创建保存实体的方法
+ignoreListMethod:                 # 不创建实体列表的方法
+ignoreRemoveMethod: true          # 不创建删除实体的方法
+ignoreSaveMethod: true            # 不创建保存实体的方法
 ignoreUpdateMethod: false         # 不创建更新的方法
 # 具体字段配置
 fieldSpecs:

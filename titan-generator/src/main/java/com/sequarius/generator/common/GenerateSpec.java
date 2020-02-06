@@ -15,6 +15,8 @@ import java.util.Set;
 public class GenerateSpec {
 
     private String entityName;
+    private String doEntityName;
+    private String camelEntityName;
     private String displayName;
     private String moduleName;
     private String url;
@@ -24,6 +26,7 @@ public class GenerateSpec {
     private String basePackageName;
     private String domainPackageName;
     private String controllerPackageName;
+    private String commonPackageName;
 
     private Boolean overrideWhenFileExisted;
     private Boolean ignoreController;

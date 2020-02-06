@@ -1,6 +1,6 @@
 <#assign aDateTime = .now>
 <#assign aDate = aDateTime?date>
-package ${basePackageName}.${domainPackageName};
+package ${basePackageName}.${moduleName}.${domainPackageName};
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,10 +16,11 @@ import javax.validation.constraints.Pattern;
 </#list>
 
 /**
-* ${displayName}响应实体
-* @since ${aDate?iso_utc}
-* @author titan-generator
-*/
+ * ${displayName}响应实体
+ *
+ * @author titan-generator
+ * @since ${aDate?iso_utc}
+ */
 @Data
 @ApiModel("${displayName}响应实体")
 public class ${entityName}ResponseDTO {

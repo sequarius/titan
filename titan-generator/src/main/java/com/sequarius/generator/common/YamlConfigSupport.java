@@ -1,10 +1,12 @@
 package com.sequarius.generator.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -15,19 +17,34 @@ import java.util.stream.Collectors;
  * @author Sequarius *
  * @since 04/02/2020
  */
+@Slf4j
 public class YamlConfigSupport {
 
-    public GenerateSpec loadGenerateSpec(InputStream inputStream, Entity entity) {
+    public GenerateSpec loadGenerateSpec(InputStream inputStream,ClassLoader loader,String entityClassName) {
         Yaml yaml = new Yaml(new Constructor(GenerateSpec.class));
         GenerateSpec spec = yaml.load(inputStream);
+        Entity entity = null;
+        try {
+            entity = new EntityFieldHelper().getEntity(loader,entityClassName ,
+                    spec.getCommonPackageName()+".annonation.Filed",
+                    spec.getCommonPackageName()+".annonation.Entity");
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            log.error(e.getMessage(),e);
+            return null;
+        }
         initConfig(spec, entity);
         return spec;
     }
 
     private void initConfig(GenerateSpec spec, Entity entity) {
         if (!StringUtility.stringHasValue(spec.getEntityName())) {
-            spec.setEntityName(entity.getName().replace("DO",""));
+            String entityName = entity.getName().replace("DO", "");
+            spec.setEntityName(entityName);
         }
+
+        spec.setCamelEntityName(Character.toLowerCase(spec.getEntityName().charAt(0))+spec.getEntityName().substring(1));
+        spec.setDoEntityName(entity.getName());
+
         if (!StringUtility.stringHasValue(spec.getDisplayName())) {
             spec.setDisplayName(entity.getDisplayName());
         }

@@ -1,6 +1,6 @@
 <#assign aDateTime = .now>
 <#assign aDate = aDateTime?date>
-package ${basePackageName}.${domainPackageName};
+package ${basePackageName}.${moduleName}.${domainPackageName};
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,8 +17,9 @@ import ${fieldTypePackage};
 
 /**
  * ${displayName}请求实体
- * @since ${aDate?iso_utc}
+ *
  * @author titan-generator
+ * @since ${aDate?iso_utc}
  */
 @Data
 @ApiModel("${displayName}请求实体")
