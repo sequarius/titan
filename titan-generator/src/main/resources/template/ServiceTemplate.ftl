@@ -3,6 +3,7 @@
 package ${basePackageName}.${moduleName}.${servicePackageName};
 
 import ${commonPackageName}.Page;
+import ${commonPackageName}.PageData;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}RequestDTO;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}ResponseDTO;
 
@@ -24,7 +25,7 @@ public interface ${entityName}Service {
      * @param keyword 搜索关键字
      * @return ${displayName}列表
      */
-    List<${entityName}ResponseDTO> list${entityName}s(Page page, String keyword);
+    PageData<${entityName}ResponseDTO> list${entityName}s(Page page, String keyword);
 </#if>
 <#if !ignoreSaveMethod?? || !ignoreSaveMethod>
 

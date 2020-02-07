@@ -6,6 +6,7 @@ import ${basePackageName}.${domainPackageName}.${doEntityName};
 import ${basePackageName}.${domainPackageName}.${doEntityName}Example;
 import ${basePackageName}.repository.${doEntityName}Mapper;
 import ${commonPackageName}.Page;
+import ${commonPackageName}.PageData;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}RequestDTO;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}ResponseDTO;
 import ${basePackageName}.${moduleName}.${servicePackageName}.${entityName}Service;
@@ -39,7 +40,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
      * @return ${displayName}列表
      */
     @Override
-    public List<${entityName}ResponseDTO> list${entityName}s(Page page, String keyword) {
+    public PageData<${entityName}ResponseDTO> list${entityName}s(Page page, String keyword) {
         ${doEntityName}Example example = new ${doEntityName}Example();
         example.setPage(page);
 <#if !flagDelete?? || !flagDelete>
@@ -60,7 +61,9 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
         }
 </#if>
 </#if>
-        return BeanUtils.copyList(${camelEntityName}Mapper.selectByExample(example), ${entityName}ResponseDTO.class);
+        List<${entityName}ResponseDTO> data = BeanUtils.copyList(${camelEntityName}Mapper.selectByExample(example), ${entityName}ResponseDTO.class);
+        long totalCount = ${camelEntityName}Mapper.countByExample(example);
+        return new PageData<>(data,totalCount,page);
     }
 </#if>
 <#if !ignoreSaveMethod?? || !ignoreSaveMethod>

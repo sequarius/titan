@@ -3,6 +3,7 @@
 package ${basePackageName}.${moduleName}.${controllerPackageName};
 
 import ${commonPackageName}.Page;
+import ${commonPackageName}.PageData;
 import ${commonPackageName}.Response;
 import ${commonPackageName}.message.CommonMessage;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}RequestDTO;
@@ -43,7 +44,7 @@ public class ${entityName}Controller {
     @GetMapping("${url!('/'+camelEntityName)}s")
     @ApiOperation("查看${displayName}列表")
     @RequiresPermissions("${moduleName}:${camelEntityName}:view")
-    public Response<List<${entityName}ResponseDTO>> list(@Valid Page page, String keyword) {
+    public Response<PageData<${entityName}ResponseDTO>> list(@Valid Page page, String keyword) {
         return Response.success(${camelEntityName}Service.list${entityName}s(page, keyword));
     }
 </#if>
