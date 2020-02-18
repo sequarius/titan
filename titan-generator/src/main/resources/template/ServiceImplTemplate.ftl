@@ -58,6 +58,8 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 <#list searchableFieldNames as fieldName>
             example.or().andDeletedEqualTo(false).and${fieldName?cap_first}Like(keyword + "%");
 </#list>
+        }else{
+            example.createCriteria().andDeletedEqualTo(false);
         }
 </#if>
 </#if>

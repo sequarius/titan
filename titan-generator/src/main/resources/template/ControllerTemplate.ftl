@@ -67,6 +67,9 @@ public class ${entityName}Controller {
     @ApiOperation("删除${displayName}")
     @RequiresPermissions("${moduleName}:${camelEntityName}:remove")
     public Response<${entityName}ResponseDTO> remove${entityName}(RequestEntity<List<Long>> ids) {
+        if (ids.getBody() == null || ids.getBody().isEmpty()) {
+            return Response.fail(commonMessage.getEmptyId());
+        }
         Integer result = ${camelEntityName}Service.remove${entityName}(ids.getBody());
         if (result < 1) {
             return Response.fail(commonMessage.getEntityRemoveFailed(ENTITY_NAME));
@@ -92,6 +95,9 @@ public class ${entityName}Controller {
     @ApiOperation("更新${displayName}")
     @RequiresPermissions("${moduleName}:${camelEntityName}:update")
     public Response<String> update${entityName}(@Valid @RequestBody ${entityName}RequestDTO requestDTO) {
+        if (requestDTO.getId() == null) {
+            return Response.fail(commonMessage.getEmptyId());
+        }
         Integer result = ${camelEntityName}Service.update${entityName}(requestDTO);
         if (result > 0) {
             return Response.success(commonMessage.getEntityUpdateSuccess(ENTITY_NAME));
