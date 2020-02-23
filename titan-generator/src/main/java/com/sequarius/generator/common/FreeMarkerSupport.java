@@ -101,7 +101,7 @@ public class FreeMarkerSupport {
         }
 
 
-        log.info("generate request dto file in {}", outputFile);
+        log.info("generate template file at {}", outputFile);
     }
 
 

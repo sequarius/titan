@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -19,6 +21,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class YamlConfigSupport {
+
+    public final static String REMARKS_PATTERN = "(.*\\s*)\\[\\s*(\\w+\\s*\\(\\s*[\\u4e00-\\u9fa5_\\-a-zA-Z0-9]+\\s*\\)\\s*:\\s*[\\u4e00-\\u9fa5_\\-a-zA-Z0-9]+\\s*\\,?\\s*)+\\s*\\]\\s*.*";
+
+    Pattern pattern = Pattern.compile(REMARKS_PATTERN);
 
     public GenerateSpec loadGenerateSpec(InputStream inputStream,ClassLoader loader,String entityClassName) {
         Yaml yaml = new Yaml(new Constructor(GenerateSpec.class));
@@ -60,12 +66,20 @@ public class YamlConfigSupport {
         for (Map.Entry<String, Field> entityFiled : entity.getFiledMap().entrySet()) {
             // init common field
             FieldSpec fieldSpec = specialConfig.get(entityFiled.getKey());
-            if (fieldSpec == null) {
+            if ( fieldSpec == null) {
                 fieldSpec = new FieldSpec();
                 fieldSpec.setName(entityFiled.getValue().getName());
             }
             if (!StringUtility.stringHasValue(fieldSpec.getDisplayName())) {
-                fieldSpec.setDisplayName(entityFiled.getValue().getDisplayName());
+                String displayName = entityFiled.getValue().getDisplayName();
+
+                // for enum comment
+                Matcher matcher = pattern.matcher(displayName);
+                if(matcher.find()){
+                    displayName= matcher.group(1);
+                }
+
+                fieldSpec.setDisplayName(displayName);
             }
             if (fieldSpec.getMaxLength() == null) {
                 fieldSpec.setMaxLength(entityFiled.getValue().getLength());

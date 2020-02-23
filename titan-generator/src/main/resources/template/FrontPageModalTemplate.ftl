@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Modal, Button, Form, Input, InputNumber, Switch } from 'antd';
+import { Modal, Button, Form, Input, InputNumber, Switch, DatePicker} from 'antd';
 
 import { connect } from 'dva';
+import moment from 'moment';
 
 const layout = {
     labelCol: { span: 8 },
@@ -17,7 +18,8 @@ const ${entityName}Modal = ({ dispatch, ${moduleName}${entityName}, loading }) =
     useEffect(() => {
         if (${moduleName}${entityName}.${camelEntityName} !== null) {
             form.resetFields();
-            form.setFieldsValue({ ${camelEntityName}: ${moduleName}${entityName}.${camelEntityName} });
+            let ${camelEntityName}  = { ...${moduleName}${entityName}.${camelEntityName},<#list fieldSpecs as fieldSpec><#if (!fieldSpec.requestDTOIgnore??||!fieldSpec.requestDTOIgnore) && fieldSpec.name!= 'createTime' && fieldSpec.name!= 'updateTime' && fieldSpec.type.simpleName=='Date'> ${fieldSpec.name} : new moment(${moduleName}${entityName}?.${camelEntityName}?.${fieldSpec.name} || new Date(), "YYYY-MM-DD HH:mm:ss"),</#if></#list> }
+            form.setFieldsValue({ ${camelEntityName}: ${camelEntityName}  });
         }
     },[${moduleName}${entityName}]);
 
@@ -25,7 +27,11 @@ const ${entityName}Modal = ({ dispatch, ${moduleName}${entityName}, loading }) =
         form
             .validateFields()
             .then(values => {
-                form.submit();
+<#list fieldSpecs as fieldSpec>
+    <#if (!fieldSpec.requestDTOIgnore??||!fieldSpec.requestDTOIgnore) && fieldSpec.name!= 'createTime' && fieldSpec.name!= 'updateTime' && fieldSpec.type.simpleName=='Date'>
+                values.${camelEntityName}.${fieldSpec.name} = values.${camelEntityName}.${fieldSpec.name}.format('YYYY-MM-DD HH:mm:ss');
+    </#if>
+</#list>
                 if (${moduleName}${entityName}.${camelEntityName}?.id) {
                     values.${camelEntityName}.id = ${moduleName}${entityName}.${camelEntityName}.id;
                     dispatch({
@@ -99,7 +105,9 @@ const ${entityName}Modal = ({ dispatch, ${moduleName}${entityName}, loading }) =
                         <InputNumber />
            <#elseif fieldSpec.type.simpleName =="Boolean">
                         <Switch />
-           <#else>
+           <#elseif fieldSpec.type.simpleName =="Date">
+                        <DatePicker format="YYYY-MM-DD HH:mm:ss" />
+       <#else>
                         <Input />
        </#if>
                     </Form.Item>
