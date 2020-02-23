@@ -32,11 +32,11 @@ public class ${entityName}RequestDTO {
     <#if fieldSpec.notNull??&&fieldSpec.notNull>
     @NotNull(message = "${fieldSpec.displayName}为必填项！")
     </#if>
-    <#if fieldSpec.maxLength?? && (fieldSpec.type.simpleName== "Long" || fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal")>
+    <#if fieldSpec.maxLength?? && (fieldSpec.type.simpleName== "Long" || fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal" || fieldSpec.type.simpleName== "Byte")>
         <#assign x=fieldSpec.maxLength>
     @Max(value = <#if (x<19)>1<#list 1..x as i>0</#list>L<#else>9223372036854775807L</#if>, message = "${fieldSpec.displayName}不能大于<#if (x<19)>1<#list 1..x as i>0</#list>L<#else>9223372036854775807L</#if>")
     </#if>
-    <#if fieldSpec.minLength?? && (fieldSpec.type.simpleName== "Long" || fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal")>
+    <#if fieldSpec.minLength?? && (fieldSpec.type.simpleName== "Long" || fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal" || fieldSpec.type.simpleName== "Byte")>
         <#assign x=fieldSpec.maxLength>
     @Min(value = <#if (x<19)>1<#list 1..x as i>0</#list>L<#else>9223372036854775807L</#if>, message = "${fieldSpec.displayName}不能小于<#if (x<19)>1<#list 1..x as i>0</#list>L<#else>9223372036854775807L</#if>")
     </#if>

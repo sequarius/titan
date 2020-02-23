@@ -82,11 +82,11 @@ const ${entityName}Modal = ({ dispatch, ${moduleName}${entityName}, loading }) =
        <#if fieldSpec.notNull??&&fieldSpec.notNull>
                             { required: true, message: '${fieldSpec.displayName}为必填项！' },
        </#if>
-       <#if fieldSpec.maxLength?? && (fieldSpec.type.simpleName== "Long" || fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal")>
+       <#if fieldSpec.maxLength?? && (fieldSpec.type.simpleName== "Long" || fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal"|| fieldSpec.type.simpleName== "Byte")>
            <#assign x=fieldSpec.maxLength>
                             { max: <#if (x<19)>1<#list 1..x as i>0</#list><#else>9223372036854775807</#if>, type: "number", message: '${fieldSpec.displayName}不能大于<#if (x<19)>1<#list 1..x as i>0</#list><#else>9223372036854775807</#if>' },
        </#if>
-       <#if fieldSpec.minLength?? && (fieldSpec.type.simpleName== "Long" || fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal")>
+       <#if fieldSpec.minLength?? && (fieldSpec.type.simpleName== "Long" || fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal"|| fieldSpec.type.simpleName== "Byte")>
            <#assign x=fieldSpec.maxLength>
                             { min: <#if (x<19)>1<#list 1..x as i>0</#list><#else>9223372036854775807</#if>, type: "number", message: '${fieldSpec.displayName}不能小于<#if (x<19)>1<#list 1..x as i>0</#list><#else>9223372036854775807</#if>' },
        </#if>
@@ -101,7 +101,7 @@ const ${entityName}Modal = ({ dispatch, ${moduleName}${entityName}, loading }) =
        </#if>
                         ]}
                     >
-       <#if fieldSpec.type.simpleName== "Long" ||fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal">
+       <#if fieldSpec.type.simpleName== "Long" ||fieldSpec.type.simpleName== "Integer" || fieldSpec.type.simpleName== "BigDecimal"|| fieldSpec.type.simpleName== "Byte">
                         <InputNumber />
            <#elseif fieldSpec.type.simpleName =="Boolean">
                         <Switch />
