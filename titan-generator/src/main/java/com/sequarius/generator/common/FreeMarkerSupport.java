@@ -58,6 +58,52 @@ public class FreeMarkerSupport {
         writeToFile(temp, generateSpec.getControllerPackageName(), generateSpec.getEntityName() + "Controller.java");
     }
 
+    public void generateFrontService() throws IOException {
+        Template temp = getTemplate("FrontServiceTemplate.ftl");
+        writeToFrontProject(temp, "src/services/" + generateSpec.getModuleName(), generateSpec.getCamelEntityName() + ".js");
+    }
+
+    public void generateFrontModel() throws IOException {
+        Template temp = getTemplate("FrontModelTemplate.ftl");
+        writeToFrontProject(temp, "src/models/" + generateSpec.getModuleName(), generateSpec.getCamelEntityName() + ".js");
+    }
+
+    public void generateFrontModal() throws IOException {
+        Template temp = getTemplate("FrontPageModalTemplate.ftl");
+        writeToFrontProject(temp, "src/pages/" + generateSpec.getModuleName()+"/"+generateSpec.getEntityName() + "/components/" + generateSpec.getEntityName() + "Modal", "index.jsx");
+    }
+    public void generateFrontTable() throws IOException {
+        Template temp = getTemplate("FrontPageTableTemplate.ftl");
+        writeToFrontProject(temp, "src/pages/" + generateSpec.getModuleName()+"/"+generateSpec.getEntityName() + "/components/" + generateSpec.getEntityName() + "Table", "index.jsx");
+    }
+
+    public void generateFrontPage() throws IOException {
+        Template temp = getTemplate("FrontPageTemplate.ftl");
+        writeToFrontProject(temp, "src/pages/" + generateSpec.getModuleName()+"/"+generateSpec.getEntityName(), "index.jsx");
+    }
+
+    public void writeToFrontProject(Template template, String subPath, String fileName) {
+        File frontRootDir = new File(generateSpec.getFrontProjectRoot());
+        File outputFile = new File(frontRootDir, subPath + "/" + fileName);
+        writeFile(template, outputFile);
+    }
+
+    private void writeFile(Template template, File outputFile) {
+        if (outputFile.exists() && !Boolean.TRUE.equals(generateSpec.getOverrideWhenFileExisted())) {
+            throw new RuntimeException("cant generate " + outputFile + ", because the file is already existed!");
+        } else {
+            outputFile.getParentFile().mkdirs();
+        }
+        try (FileWriter fileWriter = new FileWriter(outputFile)) {
+            template.process(generateSpec, fileWriter);
+        } catch (IOException | TemplateException e) {
+            log.error(e.getMessage(), e);
+        }
+
+
+        log.info("generate request dto file in {}", outputFile);
+    }
+
 
     public String getFileName(String subPackageName, String fileName) {
         String outputFileName = generateSpec.getProjectRoot() + "/src/main/java/" +
@@ -69,17 +115,6 @@ public class FreeMarkerSupport {
     public void writeToFile(Template template, String subpackageName, String fileName) {
         String outputFileName = getFileName(subpackageName, fileName);
         File outPutFile = new File(outputFileName);
-        if (outPutFile.exists() && !Boolean.TRUE.equals(generateSpec.getOverrideWhenFileExisted())) {
-            throw new RuntimeException("cant generate " + outputFileName + ", because the file is already existed!");
-        }
-
-        try (FileWriter fileWriter = new FileWriter(outPutFile)) {
-            template.process(generateSpec, fileWriter);
-        } catch (IOException | TemplateException e) {
-            log.error(e.getMessage(), e);
-        }
-
-
-        log.info("generate request dto file in {}", outputFileName);
+        writeFile(template, outPutFile);
     }
 }

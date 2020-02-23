@@ -1,4 +1,5 @@
 projectRoot: D:/WorkSpace/titan-sample/titan-sample-system
+frontProjectRoot: D:\WorkSpace\titan-sample\titan-frontend
 basePackageName: com.sequarius.titan.sample
 servicePackageName: service
 domainPackageName: domain
@@ -14,22 +15,26 @@ ignoreController: false           # 不创建controller
 ignoreGetMethod: false            # 不创建获取单个实体的方法
 ignoreListMethod:                 # 不创建实体列表的方法
 ignoreRemoveMethod: true          # 不创建删除实体的方法
-ignoreSaveMethod: true            # 不创建保存实体的方法
-ignoreUpdateMethod: false         # 不创建更新的方法
+ignoreSaveMethod:             # 不创建保存实体的方法
+ignoreUpdateMethod: true         # 不创建更新的方法
 # 具体字段配置
 fieldSpecs:
 - name: id                  #字段名称
-  defaultValue: 13            #默认值
-  displayName: ida             #显示名
-  maxLength: 15                  #最大长度
-  minLength: 14                 #最小长度
-  notNull: true                #是否非空
-  regPatten: xdsjsd               #正则校验规则
+  defaultValue:             #默认值
+  displayName:              #显示名
+  maxLength:                   #最大长度
+  minLength:                  #最小长度
+  notNull:                 #是否非空
+  regPatten:                #正则校验规则
   regPattenMessage: "xds错误"        #正则校验失败
-  requestDTOIgnore: null        #是否在requestDTO中忽略该字段
-  responseDTOIgnore: null       #是否在responseDTO中忽略该字段
-  searchable: null
+  requestDTOIgnore:         #是否在requestDTO中忽略该字段
+  responseDTOIgnore:        #是否在responseDTO中忽略该字段
+  searchable:
 - name: username
   searchable: true
+  notNull: true
+- name: password
+  responseDTOIgnore: true
 - name: phoneNumber
   searchable: true
+  notNull: true

@@ -25,6 +25,7 @@ public class GenerateSpec {
 
     private String servicePackageName;
     private String projectRoot;
+    private String frontProjectRoot;
     private String basePackageName;
     private String domainPackageName;
     private String controllerPackageName;

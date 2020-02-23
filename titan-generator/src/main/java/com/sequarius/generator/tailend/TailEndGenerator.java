@@ -48,6 +48,15 @@ public class TailEndGenerator {
             if (!Boolean.TRUE.equals(generateSpec.getIgnoreController())) {
                 freeMarkerSupport.generateController();
             }
+
+            // gen if frontend root is current
+            if (generateSpec.getFrontProjectRoot()!=null && !"".equals(generateSpec.getFrontProjectRoot())) {
+                freeMarkerSupport.generateFrontService();
+                freeMarkerSupport.generateFrontModel();
+                freeMarkerSupport.generateFrontModal();
+                freeMarkerSupport.generateFrontTable();
+                freeMarkerSupport.generateFrontPage();
+            }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
