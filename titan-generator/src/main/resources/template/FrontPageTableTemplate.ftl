@@ -75,7 +75,7 @@ const ${entityName}Table = ({ dispatch, ${moduleName}${entityName}, loading }) =
           pagination={false}
           total={${moduleName}${entityName}.total}
 <#if !ignoreSaveMethod?? || !ignoreSaveMethod>
-          toolBarRender={(action, { selectedRows }) => [<Button type="primary" onClick={() => update${entityName}Handler({})}>新建${displayName}</Button>]}
+          toolBarRender={(action, { selectedRows }) => [<${entityName}Modal />]}
 </#if>
           headerTitle="${displayName}列表"
           search={false}
@@ -83,7 +83,6 @@ const ${entityName}Table = ({ dispatch, ${moduleName}${entityName}, loading }) =
           loading={isLoading}
           dataSource={${moduleName}${entityName}.list}
         />
-        <${entityName}Modal />
         <Pagination
           className="ant-table-pagination"
           onChange={pageChangedHandler}

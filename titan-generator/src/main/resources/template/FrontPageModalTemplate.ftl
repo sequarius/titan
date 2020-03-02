@@ -15,6 +15,13 @@ const ${entityName}Modal = ({ dispatch, ${moduleName}${entityName}, loading }) =
     const updateLoading = loading.effects['${moduleName}${entityName}/update${entityName}'];
     const saveLoading = loading.effects['${moduleName}${entityName}/save${entityName}'];
 
+    function show${entityName}Modal() {
+        dispatch({
+            type: '${moduleName}${entityName}/set${entityName}',
+            payload: { ${camelEntityName}: {} },
+        });
+    }
+
     useEffect(() => {
         if (${moduleName}${entityName}.${camelEntityName} !== null) {
             form.resetFields();
@@ -60,8 +67,9 @@ const ${entityName}Modal = ({ dispatch, ${moduleName}${entityName}, loading }) =
 
     return (
         <div>
+            <Button type="primary" onClick={()=>show${entityName}Modal()}>新增${displayName}</Button>
             <Modal
-                title={(${moduleName}${entityName}?.${camelEntityName}?.id ? '修改' : '新增') + '用户'}
+                title={(${moduleName}${entityName}?.${camelEntityName}?.id ? '修改' : '新增') + '${displayName}'}
                 visible={${moduleName}${entityName}.${camelEntityName} !== null}
                 onOk={handleOk}
                 maskClosable={false}
