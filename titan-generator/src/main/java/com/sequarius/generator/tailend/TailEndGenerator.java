@@ -50,7 +50,8 @@ public class TailEndGenerator {
             }
 
             // gen if frontend root is current
-            if (generateSpec.getFrontProjectRoot()!=null && !"".equals(generateSpec.getFrontProjectRoot())) {
+            if (generateSpec.getFrontProjectRoot() != null && !"".equals(generateSpec.getFrontProjectRoot())
+                    && !Boolean.TRUE.equals(generateSpec.getIgnoreController())) {
                 freeMarkerSupport.generateFrontService();
                 freeMarkerSupport.generateFrontModel();
                 freeMarkerSupport.generateFrontModal();
