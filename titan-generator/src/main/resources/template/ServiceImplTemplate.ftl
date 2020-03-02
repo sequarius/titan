@@ -43,6 +43,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     public PageData<${entityName}ResponseDTO> list${entityName}s(Page page, String keyword) {
         ${doEntityName}Example example = new ${doEntityName}Example();
         example.setPage(page);
+        example.setOrderByClause("id DESC");
 <#if !flagDelete?? || !flagDelete>
 <#if searchableFieldNames?size!=0>
         if (!StringUtils.isEmpty(keyword)) {
