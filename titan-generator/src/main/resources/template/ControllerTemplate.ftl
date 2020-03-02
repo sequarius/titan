@@ -2,9 +2,9 @@
 <#assign aDate = aDateTime?date>
 package ${basePackageName}.${moduleName}.${controllerPackageName};
 
-import ${commonPackageName}.Page;
-import ${commonPackageName}.PageData;
-import ${commonPackageName}.Response;
+import ${commonPackageName}.domain.Page;
+import ${commonPackageName}.domain.PageData;
+import ${commonPackageName}.domain.Response;
 import ${commonPackageName}.message.CommonMessage;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}RequestDTO;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}ResponseDTO;

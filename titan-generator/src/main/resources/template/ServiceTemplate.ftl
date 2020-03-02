@@ -2,8 +2,8 @@
 <#assign aDate = aDateTime?date>
 package ${basePackageName}.${moduleName}.${servicePackageName};
 
-import ${commonPackageName}.Page;
-import ${commonPackageName}.PageData;
+import ${commonPackageName}.domain.Page;
+import ${commonPackageName}.domain.PageData;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}RequestDTO;
 import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}ResponseDTO;
 
