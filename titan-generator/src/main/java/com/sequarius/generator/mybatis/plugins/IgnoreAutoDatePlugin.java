@@ -16,16 +16,19 @@ public class IgnoreAutoDatePlugin extends PluginAdapter {
         removeTimeAttribute(element);
         return super.sqlMapUpdateByExampleSelectiveElementGenerated(element, introspectedTable);
     }
+
     @Override
     public boolean sqlMapUpdateByPrimaryKeySelectiveElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         removeTimeAttribute(element);
         return super.sqlMapUpdateByPrimaryKeySelectiveElementGenerated(element, introspectedTable);
     }
+
     @Override
     public boolean sqlMapUpdateByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         removeTimeTextAttribute(element);
         return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
     }
+
     @Override
     public boolean sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         removeTimeTextAttribute(element);
@@ -35,54 +38,57 @@ public class IgnoreAutoDatePlugin extends PluginAdapter {
     private void removeTimeTextAttribute(XmlElement element) {
         List<Element> elements = element.getElements();
         Iterator<Element> iterator = elements.iterator();
-        while (iterator.hasNext()){
-            Element baseElements=iterator.next();
-            if (!(baseElements instanceof TextElement)){
+        while (iterator.hasNext()) {
+            Element baseElements = iterator.next();
+            if (!(baseElements instanceof TextElement)) {
                 continue;
             }
-            TextElement targetElement=(TextElement)baseElements;
-            if(targetElement.getContent().contains("update_time")||targetElement.getContent().contains("create_time")){
+            TextElement targetElement = (TextElement) baseElements;
+            if (targetElement.getContent().contains("update_time") || targetElement.getContent().contains("create_time")) {
                 iterator.remove();
             }
         }
         for (int i = elements.size() - 1; i >= 0; i--) {
-            Element baseElements=elements.get(i);
-            if (!(baseElements instanceof TextElement)){
+            Element baseElements = elements.get(i);
+            if (!(baseElements instanceof TextElement)) {
                 continue;
             }
-            TextElement targetElement=(TextElement)baseElements;
-            if(targetElement.getContent().endsWith(",")){
-                elements.set(i,new TextElement(targetElement.getContent().replaceAll(",","")));
+            TextElement targetElement = (TextElement) baseElements;
+            String content = targetElement.getContent();
+            if (content.trim().startsWith("where")) {
+                continue;
+            }
+            if (content.endsWith(",")) {
+                elements.set(i, new TextElement(content.substring(0, content.length() - 1)));
             }
             break;
         }
     }
 
-    public boolean validate(List<String> warnings)
-    {
+    public boolean validate(List<String> warnings) {
         return true;
     }
 
     private void removeTimeAttribute(XmlElement element) {
         List<Element> elements = element.getElements();
         Iterator<Element> iterator = elements.iterator();
-        while (iterator.hasNext()){
-            Element baseElements=iterator.next();
-            if (!(baseElements instanceof XmlElement)){
+        while (iterator.hasNext()) {
+            Element baseElements = iterator.next();
+            if (!(baseElements instanceof XmlElement)) {
                 continue;
             }
-            XmlElement setTagElement=(XmlElement)baseElements;
-            if(!setTagElement.getName().contains("set")){
+            XmlElement setTagElement = (XmlElement) baseElements;
+            if (!setTagElement.getName().contains("set")) {
                 continue;
             }
             List<Element> setTagElements = setTagElement.getElements();
             Iterator<Element> setTagIterator = setTagElements.iterator();
-            while (setTagIterator.hasNext()){
+            while (setTagIterator.hasNext()) {
                 Element currentElement = setTagIterator.next();
-                if (!(currentElement instanceof XmlElement)){
+                if (!(currentElement instanceof XmlElement)) {
                     continue;
                 }
-                XmlElement setTagInnerElement=(XmlElement)currentElement;
+                XmlElement setTagInnerElement = (XmlElement) currentElement;
                 for (Element next : setTagInnerElement.getElements()) {
                     if (!(next instanceof TextElement)) {
                         continue;
