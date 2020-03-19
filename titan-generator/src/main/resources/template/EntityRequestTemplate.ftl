@@ -41,13 +41,13 @@ public class ${entityName}RequestDTO {
     @Min(value = <#if (x<19)>1<#list 1..x as i>0</#list>L<#else>9223372036854775807L</#if>, message = "${fieldSpec.displayName}不能小于<#if (x<19)>1<#list 1..x as i>0</#list>L<#else>9223372036854775807L</#if>")
     </#if>
     <#if fieldSpec.minLength?? &&!fieldSpec.maxLength?? && fieldSpec.type.simpleName= "String">
-    @Length(min = ${fieldSpec.minLength},message = "${fieldSpec.displayName}不能小于${fieldSpec.minLength}个字符!")
+    @Length(min = ${fieldSpec.minLength?c},message = "${fieldSpec.displayName}不能小于${fieldSpec.minLength}个字符!")
     </#if>
     <#if fieldSpec.maxLength?? &&!fieldSpec.minLength?? && fieldSpec.type.simpleName= "String">
-    @Length(max = ${fieldSpec.maxLength},message = "${fieldSpec.displayName}不能超过${fieldSpec.maxLength}个字符!")
+    @Length(max = ${fieldSpec.maxLength?c},message = "${fieldSpec.displayName}不能超过${fieldSpec.maxLength}个字符!")
     </#if>
     <#if fieldSpec.maxLength?? && fieldSpec.minLength?? && fieldSpec.type.simpleName= "String">
-    @Length(max = ${fieldSpec.maxLength}, min= ${fieldSpec.minLength} ,message = "${fieldSpec.displayName}长度必须在${fieldSpec.maxLength}-${fieldSpec.maxLength}个字符长度之间!")
+    @Length(max = ${fieldSpec.maxLength?c}, min= ${fieldSpec.minLength?c} ,message = "${fieldSpec.displayName}长度必须在${fieldSpec.maxLength}-${fieldSpec.maxLength}个字符长度之间!")
     </#if>
     <#if fieldSpec.regPatten??>
     @Pattern(regexp = "${fieldSpec.regPatten}", message = "${fieldSpec.regPattenMessage!(fieldSpec.regPatten+'不符合校验规则!')}")
