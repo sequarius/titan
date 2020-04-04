@@ -99,10 +99,10 @@ const ${entityName}Modal = ({ dispatch, ${moduleName}${entityName}, loading }) =
                             { min: <#if (x<19)>1<#list 1..x as i>0</#list><#else>9223372036854775807</#if>, type: "number", message: '${fieldSpec.displayName}不能小于<#if (x<19)>1<#list 1..x as i>0</#list><#else>9223372036854775807</#if>' },
        </#if>
        <#if fieldSpec.minLength?? && fieldSpec.type.simpleName= "String">
-                            { min: ${fieldSpec.minLength}, message: '${fieldSpec.displayName}不能小于${fieldSpec.minLength}个字符!' },
+                            { min: ${fieldSpec.minLength?c}, message: '${fieldSpec.displayName}不能小于${fieldSpec.minLength}个字符!' },
        </#if>
        <#if fieldSpec.maxLength?? && fieldSpec.type.simpleName= "String">
-                            { max: ${fieldSpec.maxLength}, message: '${fieldSpec.displayName}不能大于${fieldSpec.maxLength}个字符!' },
+                            { max: ${fieldSpec.maxLength?c}, message: '${fieldSpec.displayName}不能大于${fieldSpec.maxLength}个字符!' },
        </#if>
        <#if fieldSpec.regPatten??>
                             { pattern: '${fieldSpec.regPatten}', message: '${fieldSpec.regPattenMessage!(fieldSpec.regPatten+'不符合校验规则!')}' },
