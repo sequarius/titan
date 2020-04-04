@@ -1,6 +1,6 @@
 <#assign aDateTime = .now>
 <#assign aDate = aDateTime?date>
-package ${basePackageName}.${moduleName}.${domainPackageName};
+package ${basePackageName}.${moduleName?lower_case}.${domainPackageName};
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

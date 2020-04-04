@@ -108,7 +108,7 @@ public class FreeMarkerSupport {
     public String getFileName(String subPackageName, String fileName) {
         String outputFileName = generateSpec.getProjectRoot() + "/src/main/java/" +
                 generateSpec.getBasePackageName().replaceAll("\\.", "/") + "/" +
-                generateSpec.getModuleName() + "/" + subPackageName + "/" + fileName;
+                generateSpec.getModuleName().toLowerCase() + "/" + subPackageName + "/" + fileName;
         return outputFileName;
     }
 

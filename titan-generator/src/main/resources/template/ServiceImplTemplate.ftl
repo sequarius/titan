@@ -1,6 +1,6 @@
 <#assign aDateTime = .now>
 <#assign aDate = aDateTime?date>
-package ${basePackageName}.${moduleName}.${servicePackageName}.impl;
+package ${basePackageName}.${moduleName?lower_case}.${servicePackageName}.impl;
 
 import ${basePackageName}.${domainPackageName}.${doEntityName};
 import ${basePackageName}.${domainPackageName}.${doEntityName}Example;
