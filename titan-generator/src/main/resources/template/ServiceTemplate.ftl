@@ -4,8 +4,8 @@ package ${basePackageName}.${moduleName?lower_case}.${servicePackageName};
 
 import ${commonPackageName}.domain.Page;
 import ${commonPackageName}.domain.PageData;
-import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}RequestDTO;
-import ${basePackageName}.${moduleName}.${domainPackageName}.${entityName}ResponseDTO;
+import ${basePackageName}.${moduleName?lower_case}.${domainPackageName}.${entityName}RequestDTO;
+import ${basePackageName}.${moduleName?lower_case}.${domainPackageName}.${entityName}ResponseDTO;
 
 import java.util.List;
 

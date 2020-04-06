@@ -69,7 +69,7 @@ public class TailEndGenerator {
                 new URL("file:///D:\\WorkSpace\\titan-sample\\titan-sample-repository\\target\\titan-sample-repository-1.0-SNAPSHOT.jar"),
                 new URL("file:///D:\\WorkSpace\\titan-sample\\titan-sample-common\\target\\titan-sample-common-1.0-SNAPSHOT.jar")
         });
-        TailEndGenerator.getInstance().generate(classLoader, "template.yml", "com.sequarius.titan.sample.domain.SysUserDO");
+        TailEndGenerator.getInstance().generate(classLoader, "template2.yml", "com.sequarius.titan.sample.domain.EmployeeDO");
 
     }
 }
