@@ -84,6 +84,8 @@ const ${entityName}Table = ({ dispatch, ${moduleName}${entityName}, loading }) =
           dataSource={${moduleName}${entityName}.list}
         />
         <Pagination
+          showSizeChanger = {false}
+          showQuickJumper
           className="ant-table-pagination"
           onChange={pageChangedHandler}
           defaultCurrent={6}
