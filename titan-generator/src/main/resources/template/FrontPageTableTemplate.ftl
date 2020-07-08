@@ -3,6 +3,7 @@ import { Divider, Popconfirm, Tag, Button } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import ${entityName}Modal from '../${entityName}Modal';
 import { connect } from 'dva';
+import {hasPermission} from '@/utils/authority';
 import { Pagination } from 'antd';
 import router from 'umi/router';
 
@@ -32,13 +33,13 @@ const ${entityName}Table = ({ dispatch, ${moduleName}${entityName}, loading }) =
       render: (_, record) => (
         <span>
 <#if !ignoreUpdateMethod?? || !ignoreUpdateMethod>
-          <a onClick={() => update${entityName}Handler(record)}>修改</a>
+          {hasPermission('${moduleName}:${camelEntityName}:update')&&<a onClick={() => update${entityName}Handler(record)}>修改</a>}
 </#if>
-          <Divider type="vertical" />
 <#if !ignoreRemoveMethod?? || !ignoreRemoveMethod>
-          <Popconfirm title="确认删除?" onConfirm={() => remove${entityName}Handler(record.id)}>
+          {hasPermission('${moduleName}:${camelEntityName}:remove')&&<><Divider type="vertical" />
+          <Popconfirm title="确认删除?" placement="leftTop" onConfirm={() => remove${entityName}Handler(record.id)}>
             <a>删除</a>
-          </Popconfirm>
+          </Popconfirm></>}
 </#if>
         </span>
       ),
@@ -75,7 +76,7 @@ const ${entityName}Table = ({ dispatch, ${moduleName}${entityName}, loading }) =
           pagination={false}
           total={${moduleName}${entityName}.total}
 <#if !ignoreSaveMethod?? || !ignoreSaveMethod>
-          toolBarRender={(action, { selectedRows }) => [<${entityName}Modal />]}
+          toolBarRender={(action, { selectedRows }) => [hasPermission("${moduleName}:${camelEntityName}:save")&&<${entityName}Modal />]}
 </#if>
           headerTitle="${displayName}列表"
           search={false}
