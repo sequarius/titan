@@ -55,6 +55,15 @@ public class MySQLLimitPlugin extends PluginAdapter {
         return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
     }
 
+    @Override
+    public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        XmlElement page = new XmlElement("if");
+        page.addAttribute(new Attribute("test", "page != null"));
+        page.addElement(new TextElement("limit #{page.begin} , #{page.length}"));
+        element.addElement(page);
+        return super.sqlMapSelectByExampleWithBLOBsElementGenerated(element, introspectedTable);
+    }
+
     public boolean validate(List<String> warnings)
     {
         return true;
