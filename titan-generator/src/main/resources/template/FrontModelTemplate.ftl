@@ -14,7 +14,7 @@ const ${entityName}Model = {
                 begin: (page - 1) * DEFAUNT_PAGE_SIZE,
                 length: DEFAUNT_PAGE_SIZE,
             });
-            if (response.result) {
+            if (response?.result) {
                 yield put({
                     type: 'save',
                     payload: { ...response.data },
@@ -23,7 +23,7 @@ const ${entityName}Model = {
         },
         *save${entityName}({ payload: { ${camelEntityName} } }, { call, put, select }) {
             const response = yield call(save${entityName}, ${camelEntityName});
-            if (response.result) {
+            if (response?.result) {
                 const page = yield select(state => state.${moduleName}${entityName}.current);
                 yield put({ type: 'list', payload: { page } });
                 yield put({ type: 'set${entityName}', payload: { ${camelEntityName}: null } });
@@ -31,7 +31,7 @@ const ${entityName}Model = {
         },
         *update${entityName}({ payload: { ${camelEntityName} } }, { call, put, select }) {
             const response = yield call(update${entityName}, ${camelEntityName});
-            if (response.result) {
+            if (response?.result) {
                 const page = yield select(state => state.${moduleName}${entityName}.current);
                 yield put({ type: 'list', payload: { page } });
                 yield put({ type: 'set${entityName}', payload: { ${camelEntityName}: null } });
@@ -39,7 +39,7 @@ const ${entityName}Model = {
         },
         *remove${entityName}({ payload: { id } }, { call, put, select }) {
             const response = yield call(remove${entityName}, [id]);
-            if (response.result) {
+            if (response?.result) {
                 const page = yield select(state => state.${moduleName}${entityName}.current);
                 yield put({ type: 'list', payload: { page } });
             }
